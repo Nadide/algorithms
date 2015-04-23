@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-int array[10];
+int array[1000];
 
 void swap (int a,int b)
 {
