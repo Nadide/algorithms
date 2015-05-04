@@ -1,35 +1,28 @@
 #include <stdio.h>
-int pow[1000];
+#include <math.h>
+float l[1000];
 
 int main ()
 {
-	int i,a,n,p,pp;
-	double result;
+	int n,p,psum=0,i,j;
+	float a,result=1;
 
 	// a=number n=power
-	scanf ("%d %d",&a,&n);
+	scanf ("%f %d",&a,&n);
+	
+	l[0] = a;
+	for (i=1,p=2; p<=n; i++,p*=2)
+		l[i] = l[i-1]*l[i-1];
 
-	p=1;
-	pow[0] = a;
-	if (n!=1){
-	for (i=1,p*=2; p <= n; p*=2,i++)
-		pow[i] = pow[i-1]*a;
-
-	i--;
-	p/=2;
-	pp = p;
-	result = pow[i];
-	for (p/=2,i--; pp != n; p/=2,i--)
+	for (p/=2,i--; (psum!=n && i>=0); i--,p/=2) // i>0 && ..
 	{
-		if ((pp+p) <= n)
+		if (psum+p <= n)
 		{
-			pp+=p;  
-			result *= pow[i];
+			psum+= p;
+			result*= l[i];
 		}
 	}
-	printf ("%f\n",result);
-	}
-	else
-		printf ("%d\n",a);
+	printf ("%.f\n",result);
+
 	return 0;
 }
