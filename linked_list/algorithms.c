@@ -21,6 +21,18 @@ void writelist (node *root)
 	printf ("\n");
 }
 
+node* addafter (node *node1, node *input)
+{
+	node *new;
+	
+	new = X;
+	new->value = input->value;
+	new->next = node1->next;
+	node1->next = new;
+	
+	return node1;
+}
+
 node* copylist (node *root)
 {
 	node *node1,*node2,*copy;
@@ -42,48 +54,56 @@ node* copylist (node *root)
 
 node* insertsort (node *input)
 {
-	node *node1,*node2,*after;
+	node *sentinel,*node1;
 
-	node2 = input;
+	sentinel = X;
+	sentinel->next = X;
+	sentinel->next->value = input->value;
+	sentinel->next->next = NULL;
+	input = input->next;
 
+	node1 = sentinel;
 	while (input != NULL)
 	{
-		node1 = input;
+		while (node1->next!=NULL && (node1->next->value)<(input->value))
+			node1 = node1->next;
+		node1 = addafter (node1,input);
 		input = input->next;
-
-		after = sentinel;
-		while
+		node1 = sentinel;
 	}
 
-	/*node *insert,*node1,*root2;
-	node *sentinel;
-	node1 = root;
-        insert = root2 = X;
-	sentinel->next = sentinel = X;
-	sentinel->next = root2;
-        insert->value = node1->value;
-        insert->next = NULL;
-        node1 = node1->next;
-	if (node->value < insert->value)
-	{
-		insert->next = sentinel->next;
-		sentinel->next = insert;
-	}
-	else
-	{
-		insert->next = no
-	}
-        while (node1 != NULL)
-        {
-		insert = root2;
-		while (insert->next!=NULL && insert->next->value>node1->value)
-		{
-			insert = insert->next;
-		}
-        }*/
-
+	return sentinel->next;
 }
 
+node* selectsort (node *input)
+{
+	node *node1,*sentinel,*minnode;
+	int min;
+		
+	sentinel = X;
+	sentinel->next = NULL;
+
+	node1 = input;
+	while (node1 != NULL)
+	{
+		min = node1->value;
+		minnode = node1;
+		while (node1 != NULL)
+		{
+			if (node1->next->value <= min)
+			{
+				min = node1->next->value;
+				minnode = node1->next;
+			}
+			node1 = node1->next;
+		}
+		addafter (sentinel,minnode);
+		minnode = minnode->next->next;
+		node1 = input;
+	}
+	
+	return sentinel;
+}
 
 int main ()
 {
@@ -103,7 +123,7 @@ int main ()
 
 
 	// copying lists
-	printf ("root ->  ");
+	printf ("\nroot ->  ");
 	writelist (root);
 	copy = copylist (root);
 	printf ("copy ->  ");
@@ -112,8 +132,15 @@ int main ()
 
 	
 	// sorting with insertionsort
-	node1 = insertnode (root);	
-	writenode (node1);
+	printf ("\ninsertionsort -> ");
+	node1 = insertsort (root);
+	writelist (node1);
+
+
+	// sorting with selectionsort
+	printf ("selectionsort -> ");
+	node1 = selectsort (root);	
+	writelist (node1);
 
 	return 0;
 }
