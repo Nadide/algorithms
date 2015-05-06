@@ -1,21 +1,27 @@
-a = float(input())
-n = int(input())
+# Performing Exponentiation
 
-l = [a];
-p = 2
-i = 0
-while (p <= n):
-    l += [ l[i]*l[i] ]
-    p *= 2
-    i += 1
+'''
+Calculate a to the power n
+'''
+
+def large_power(a,n):
+    plist = [a];
+    power = 2
+    i = 0
+    while (power <= n):
+        plist += [ plist[i]*plist[i] ]
+        power *= 2
+        i += 1
     
-p /= 2
-psum = 0
-result = 1.
-while (psum!=n and i>=0):
-    if (psum+p <= n):
-        psum += p
-        result *= l[i]
-    p /= 2
-    i -= 1
-print ("%.f" %result)
+    power /=2
+    psum = 0
+    result = 1.
+    while (psum!=n and i>=0):
+        if (psum+power <= n):
+            psum += power
+            result *= plist[i]
+        power /= 2
+        i -= 1
+
+    return result
+
